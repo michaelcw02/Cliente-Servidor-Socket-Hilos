@@ -6,6 +6,7 @@
 package control;
 
 import interfaz.VentanaPrincipal;
+import java.io.PrintStream;
 import modelo.Servidor;
 
 /**
@@ -27,10 +28,16 @@ public class Control {
         servidor.agregarClientes(ip);
     }
     public void agregarCantidad(int cant) {
-        
+        cantidad = cant;
+    }
+    public void calcular(String cmd) {
+        //ps = new PrintStream(/*servidor.getOutputStream()*/);
+        servidor.ejecutar(cmd);
     }
     
     
     VentanaPrincipal ventana;
     Servidor servidor;
+    int cantidad = 0;
+    PrintStream ps;
 }
