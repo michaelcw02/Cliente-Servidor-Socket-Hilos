@@ -54,6 +54,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
 
         jButton1.setText("Ingresar Cantidad");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -91,6 +96,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         String ip = ipTxtField.getText();
         control.agregarIp(ip);
     }//GEN-LAST:event_btnAgregarIPActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int cant = Integer.parseInt(qtyTxtField.getText());
+        control.agregarCantidad(cant);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarIP;
