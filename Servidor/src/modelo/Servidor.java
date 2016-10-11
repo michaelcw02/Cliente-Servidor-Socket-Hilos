@@ -5,13 +5,14 @@
  */
 package modelo;
 
+import java.io.DataInputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Random;
 
 /**
  *
@@ -35,21 +36,26 @@ public class Servidor {
             auxCmd = cmd + String.valueOf(i);
             if(iter.hasNext()) {
                 InetSocketAddress client = iter.next();
-                sendMessage(client, cmd);
+                messages(client, auxCmd);
             }
             else {
                 iter = listaClientes.listIterator();
+                i--;
             }
         }
     }
     
-    private boolean sendMessage(InetSocketAddress cliente, String str) {
+    private boolean messages(InetSocketAddress cliente, String str) {
         boolean ok = false;
-        
+        String mensajeOriginal;
         try {
             socket = new Socket(cliente.getAddress(), cliente.getPort());
-            osw = new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
-            osw.write(str, 0, str.length());
+            outputData = new PrintStream(socket.getOutputStream());
+            //inputData = new DataInputStream(socket.getInputStream());
+            //Thread.sleep(1000);
+            outputData.print(str);
+            //if ((mensajeOriginal = inputData.readLine()) != null)
+              //  System.out.println("> " + mensajeOriginal + "\n");
             ok = true;
         }
         catch (Exception e) {    
@@ -64,7 +70,8 @@ public class Servidor {
         return ok;
     }
     
-    
+    PrintStream outputData;
+    DataInputStream inputData;
     private Socket socket = null;
     OutputStreamWriter osw = null;
     private List<InetSocketAddress> listaClientes = null;
