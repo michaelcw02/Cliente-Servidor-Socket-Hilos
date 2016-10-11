@@ -5,7 +5,7 @@
  */
 package cliente;
 
-import modelo.Cliente;
+import control.Control;
 
 /**
  *
@@ -15,8 +15,8 @@ public class Main_Cliente {
     
     public static void main(String[] args) {
         
-        Cliente client = new Cliente();
-        client.start();
+        Control c = new Control();
+        c.mostrarVentana();
         
     }
     
