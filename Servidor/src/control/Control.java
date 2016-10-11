@@ -15,7 +15,7 @@ import modelo.Servidor;
  */
 public class Control {
     
-    public void Control() {
+    public Control() {
         ventana = new VentanaPrincipal(this);
         servidor = new Servidor();
     }
@@ -32,7 +32,7 @@ public class Control {
     }
     public void calcular(String cmd) {
         //ps = new PrintStream(/*servidor.getOutputStream()*/);
-        servidor.ejecutar(cmd);
+        servidor.ejecutar(cmd, cantidad);
     }
     
     
