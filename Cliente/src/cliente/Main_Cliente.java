@@ -5,8 +5,6 @@
  */
 package cliente;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import modelo.Cliente;
 
 /**
