@@ -7,10 +7,10 @@ package modelo;
 
 import java.io.OutputStreamWriter;
 import java.net.InetSocketAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Random;
 
 /**
@@ -25,10 +25,21 @@ public class Servidor {
     public void agregarClientes(String ip) {
         listaClientes.add(new InetSocketAddress(ip, PUERTO_SALIDA));
     }
-    public void ejecutar(String cmd) {
-        Random rnd = new Random();
-        for(InetSocketAddress cliente : listaClientes) {
-            sendMessage(cliente, CMD_INICIAL + cmd);
+    public void ejecutar(String cmd, int cantidad) {
+        
+        cmd = CMD_INICIAL + cmd + " ";
+        
+        ListIterator<InetSocketAddress> iter = listaClientes.listIterator();
+        String auxCmd;
+        for(int i = 1; i <= cantidad; i++) {
+            auxCmd = cmd + String.valueOf(i);
+            if(iter.hasNext()) {
+                InetSocketAddress client = iter.next();
+                sendMessage(client, cmd);
+            }
+            else {
+                iter = listaClientes.listIterator();
+            }
         }
     }
     
