@@ -5,40 +5,42 @@
  */
 package servidor;
 
+import interfaz.VentanaPrincipal;
+import java.awt.TextField;
 import java.net.ServerSocket;
 import java.util.Scanner;
+import javax.swing.JFrame;
 import modelo.Servidor;
 
 /**
  *
  * @author Michael Chen W.
  */
-public class Main_Servidor {
+public class Main_Servidor extends JFrame{
     
     public static void main(String[] args) {
-        System.out.println("Hello, this is the server..");
+        
+        /*        System.out.println("Hello, this is the server..");
         Scanner in = new Scanner(System.in);
-        String str = in.next();    
+        String str = in.next();
         
         try {
-            servidor = new ServerSocket(8585);
+        servidor = new ServerSocket(8585);
         } catch (Exception e) {
-            System.out.println("Couldn't create server..");
-            System.exit(1);
+        System.out.println("Couldn't create server..");
+        System.exit(1);
         }
         
         do {
-            try {
-                
-                
-                
-                
-            } catch (Exception e) {
-            };
-        } while (true);
-
+        try {
+        
+        
+        
+        
+        } catch (Exception e) {
+        };
+        } while (true);*/
     }
     
-    static ServerSocket servidor;   
-    Servidor server = new Servidor();
+    
 }
