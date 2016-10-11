@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import adaptadores.AdaptadorSubject;
+import interfaces.Observer;
 import java.io.BufferedWriter;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -19,6 +21,7 @@ public class Cliente extends Thread {
 
     public Cliente(){
         activo = true;
+        subject = new AdaptadorSubject();
     }
     
     @Override
@@ -29,7 +32,8 @@ public class Cliente extends Thread {
                 socket = new Socket(HOST, PORT);
             }
             catch (Exception e) {
-                System.out.println("Couldn't connect to server..");
+                setMsg("Waiting for server..\n");
+                System.out.println("Waiting for server..");
             }
             
             try {
@@ -40,6 +44,7 @@ public class Cliente extends Thread {
                 String msg = input.next();
                 bw.write(msg);
                 bw.flush();
+                setMsg("> " + msg + "\n");
                 System.out.println("> " + msg);
                 
                 // CALCULAR_PRIMO 23
@@ -51,10 +56,14 @@ public class Cliente extends Thread {
                         if(numero % i == 0)
                             cont++;                                  
                     }
-                    if(cont == 1) 
+                    if(cont == 1) {
+                        bw.write("EL NUMERO: " + numero + " ES PRIMO" + "\n");
                         System.out.println("EL NUMERO: " + numero + " ES PRIMO");
-                    else
+                    }
+                    else {
+                        bw.write("EL NUMERO: " + numero + " NO ES PRIMO" + "\n");
                         System.out.println("EL NUMERO: " + numero + " NO ES PRIMO");
+                    }
                 }
                 else if(separado[0].equals("CALCULAR_INVERSO")){
                     int num_inv = 0;
@@ -65,6 +74,8 @@ public class Cliente extends Thread {
                         div_entera = div_entera / 10;
                         num_inv = num_inv * 10 + resto_div;
                     }
+                    
+                    bw.write("El numero " + numero + " invertido es " + num_inv + "\n");
                     System.out.println("El numero " + numero + " invertido es " + num_inv);
                 }
 
@@ -94,8 +105,25 @@ public class Cliente extends Thread {
         this.activo = activo;
     }
     
+    public void agregar(Observer o) {
+        subject.agregar(o);
+    }
+    public void notificar() {
+        subject.notificar();
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+        notificar();
+    }
+    public String getMsg() {
+        return msg;
+    }
+    
+    private String msg;
     private Socket socket;
     private boolean activo;
     private final int PORT = 1234;
     private final String HOST = "127.0.0.1";
+    AdaptadorSubject subject;
 }
