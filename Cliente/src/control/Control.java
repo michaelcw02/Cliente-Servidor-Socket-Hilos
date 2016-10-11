@@ -17,6 +17,7 @@ public class Control {
     public Control() {
         ventana = new VentanaPrincipal(this);
         cliente = new Cliente();
+        cliente.agregar(ventana);
     }
     
     public void mostrarVentana() {
@@ -30,6 +31,9 @@ public class Control {
     public void desconectarse() {
         cliente.setActivo(false);
         cliente.stop();
+    }
+    public String getMsg() {
+        return cliente.getMsg();
     }
     
     Cliente cliente;
