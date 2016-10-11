@@ -106,6 +106,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void btnAgregarIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarIPActionPerformed
         String ip = ipTxtField.getText();
         control.agregarIp(ip);
+        ipTxtField.setText("");
     }//GEN-LAST:event_btnAgregarIPActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
