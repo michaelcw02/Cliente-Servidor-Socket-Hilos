@@ -37,7 +37,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements Observer{
     }
     
     public void showText(String txt) {
-        jTextArea1.append(txt);
+        jTextArea1.append(txt + "\n");
     }
     
     /**
