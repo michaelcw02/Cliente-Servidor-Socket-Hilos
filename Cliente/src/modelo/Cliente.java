@@ -7,13 +7,7 @@ package modelo;
 
 import adaptadores.AdaptadorSubject;
 import interfaces.Observer;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.DataInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -28,7 +22,6 @@ public class Cliente extends Thread {
     public Cliente(){
         activo = true;
         subject = new AdaptadorSubject();
-        calc = Numero.getInstancia();
     }
     
     @Override
@@ -55,35 +48,28 @@ public class Cliente extends Thread {
                 if ( (mensajeOriginal = inputData.readLine()) != null) {
 
                     setMsg("> " + mensajeOriginal + "\n");
+                    outputData.println("IM TESTING THIS SHIT OUT... FUCK THIS SHIT\n");
 
                     // CALCULAR_PRIMO 23
                     String[] separado = mensajeOriginal.split(" ");
                     int numero = Integer.parseInt(separado[1]);
 
                     if (separado[0].equals("CALCULAR_PRIMO")) {
-                        boolean primo = calc.calcularPrimo(numero);                        
-                        if (primo == true) {
-                            setMsg("EL NUMERO: " + numero + " ES PRIMO" + "\n");
-                            outputData.print("EL NUMERO: " + numero + " ES PRIMO" + "\n");
+                        boolean primo = Numero.getInstancia().calcularPrimo(numero);                        
+                        if (primo) {
+                            setMsg("EL NUMERO: " + numero + " ES PRIMO\n");
+                            outputData.print("EL NUMERO: " + numero + " ES PRIMO\n");
                         } else {
-                            setMsg("EL NUMERO: " + numero + " NO ES PRIMO" + "\n");
-                            outputData.print("EL NUMERO: " + numero + " NO ES PRIMO" + "\n");
+                            setMsg("EL NUMERO: " + numero + " NO ES PRIMO\n");
+                            outputData.print("EL NUMERO: " + numero + " NO ES PRIMO\n");
                         }
                     } else if (separado[0].equals("CALCULAR_INVERSO")) {
-                        int num_inv = calc.calcularInverso(numero);
+                        int num_inv = Numero.getInstancia().calcularInverso(numero);
                         setMsg("El numero " + numero + " invertido es " + num_inv + "\n");
                         outputData.print("El numero " + numero + " invertido es " + num_inv + "\n");
                     }
                 }
-
-                //Get the return message from the server
-                /*
-                InputStream is = socket.getInputStream();
-                InputStreamReader isr = new InputStreamReader(is);
-                BufferedReader br = new BufferedReader(isr);
-                String message = br.readLine();
-                System.out.println("Message received from the server : " + message);
-                */
+                
             } catch (Exception e) {
             }
         }
@@ -128,5 +114,4 @@ public class Cliente extends Thread {
     private boolean activo;
     private final int PORT = 8585;
     AdaptadorSubject subject;
-    private Numero calc;
 }
