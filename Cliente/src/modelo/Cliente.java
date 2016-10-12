@@ -8,10 +8,14 @@ package modelo;
 import adaptadores.AdaptadorSubject;
 import interfaces.Observer;
 import java.io.DataInputStream;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,12 +26,13 @@ public class Cliente extends Thread {
     public Cliente(){
         activo = true;
         subject = new AdaptadorSubject();
+        numeros = new LinkedList<>();
     }
     
     @Override
+    @SuppressWarnings("empty-statement")
     public void run() {
-        Scanner input = new Scanner(System.in);
-        
+
         try {
             servidor = new ServerSocket(PORT);
         } catch (Exception e) {
@@ -35,49 +40,70 @@ public class Cliente extends Thread {
             activo = false;
         }
         setMsg("Conectado, esperando servidor..\n");
-
+        
         while (activo) {
-                       
             try {
-                
+
                 socket = servidor.accept();
-                outputData = new PrintStream(socket.getOutputStream());
+                ip = socket.getInetAddress();
                 inputData = new DataInputStream(socket.getInputStream());
-                
+
                 String mensajeOriginal;
-                if ( (mensajeOriginal = inputData.readLine()) != null) {
+                while ((mensajeOriginal = inputData.readLine()) != null) {
 
                     setMsg("> " + mensajeOriginal + "\n");
-                    outputData.println("IM TESTING THIS SHIT OUT... FUCK THIS SHIT\n");
+                    numeros.add(new Numero(mensajeOriginal));
 
-                    // CALCULAR_PRIMO 23
-                    String[] separado = mensajeOriginal.split(" ");
-                    int numero = Integer.parseInt(separado[1]);
-
-                    if (separado[0].equals("CALCULAR_PRIMO")) {
-                        boolean primo = Numero.getInstancia().calcularPrimo(numero);                        
-                        if (primo) {
-                            setMsg("EL NUMERO: " + numero + " ES PRIMO\n");
-                            outputData.print("EL NUMERO: " + numero + " ES PRIMO\n");
-                        } else {
-                            setMsg("EL NUMERO: " + numero + " NO ES PRIMO\n");
-                            outputData.print("EL NUMERO: " + numero + " NO ES PRIMO\n");
-                        }
-                    } else if (separado[0].equals("CALCULAR_INVERSO")) {
-                        int num_inv = Numero.getInstancia().calcularInverso(numero);
-                        setMsg("El numero " + numero + " invertido es " + num_inv + "\n");
-                        outputData.print("El numero " + numero + " invertido es " + num_inv + "\n");
-                    }
                 }
-                
+
             } catch (Exception e) {
             }
+
+            try {
+                socket.close();
+            } catch (Exception e) {
+            }
+            startSending();
         }
-        try{
-            socket.close();
+    }
+    
+    private void startSending() {
+        try {
+            
+            socket = new Socket(ip, PORT+1);
+            outputData = new PrintStream(socket.getOutputStream());
+            
+            iniciarTodos();
+            while(algunoVivo());
+            
+            for(Numero numero : numeros) {
+                outputData.println(numero.getRespuesta());
+                setMsg(numero.getRespuesta());
+            }
+        } catch(Exception e) {            
+        } finally {
+            try {
+                socket.close();
+            } catch (Exception ex) {
+            }
         }
-        catch(Exception e){
+    }
+    
+    private void iniciarTodos() {        
+        for (Numero actual : numeros) {
+            actual.start();
         }
+    }
+    private boolean algunoVivo() {
+        try {
+            for (Numero actual : numeros) {
+                if (actual.isAlive()) {
+                    return true;
+                }
+            }
+        } catch (Exception ex) {
+        }
+        return false;
     }
 
     public boolean isActivo() {
@@ -112,6 +138,8 @@ public class Cliente extends Thread {
     private String msg;
     private Socket socket;
     private boolean activo;
+    private InetAddress ip;
     private final int PORT = 8585;
     AdaptadorSubject subject;
+    LinkedList<Numero> numeros = null;
 }
