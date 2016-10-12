@@ -6,6 +6,7 @@
 package modelo;
 
 import java.io.DataInputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.net.InetSocketAddress;
@@ -13,6 +14,8 @@ import java.net.Socket;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -48,18 +51,28 @@ public class Servidor {
     private boolean messages(InetSocketAddress cliente, String str) {
         boolean ok = false;
         String mensajeOriginal;
+        
         try {
             socket = new Socket(cliente.getAddress(), cliente.getPort());
+            
             outputData = new PrintStream(socket.getOutputStream());
-            //inputData = new DataInputStream(socket.getInputStream());
-            //Thread.sleep(1000);
+            inputData = new DataInputStream(socket.getInputStream());
+            
             outputData.print(str);
-            //if ((mensajeOriginal = inputData.readLine()) != null)
-              //  System.out.println("> " + mensajeOriginal + "\n");
+            Thread.sleep(1000);
+            mensajeOriginal = readMessages(socket);
+            System.out.println("> " + mensajeOriginal + "\n");
+            
+            /*
+            Thread.sleep(1000);
+            
+            if ((mensajeOriginal = inputData.readLine()) != null)
+                System.out.println("> " + mensajeOriginal + "\n");
+            */
             ok = true;
+        } catch (Exception e) {    
         }
-        catch (Exception e) {    
-        }finally {
+        finally {
             try{
                 socket.close();
             }
@@ -68,6 +81,25 @@ public class Servidor {
             }
         }
         return ok;
+    }
+    
+    private String readMessages(Socket clientSocket) {
+        int red = -1;
+        byte[] buffer = new byte[5 * 1024]; // a read buffer of 5KiB
+        byte[] redData;
+        StringBuilder clientData = new StringBuilder();
+        String redDataText;
+        try {
+            while ((red = clientSocket.getInputStream().read(buffer)) > -1) {
+                redData = new byte[red];
+                System.arraycopy(buffer, 0, redData, 0, red);
+                redDataText = new String(redData, "UTF-8"); // assumption that client sends data UTF-8 encoded
+                System.out.println("message part recieved:" + redDataText);
+                clientData.append(redDataText);
+            }
+        } catch (IOException ex) {
+        }
+        return clientData.toString();
     }
     
     PrintStream outputData;
