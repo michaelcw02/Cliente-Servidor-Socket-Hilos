@@ -34,6 +34,9 @@ public class Control {
         //ps = new PrintStream(/*servidor.getOutputStream()*/);
         servidor.ejecutar(cmd, cantidad);
     }
+    public void respuesta() {
+        servidor.respuestas();
+    }
     
     
     VentanaPrincipal ventana;
