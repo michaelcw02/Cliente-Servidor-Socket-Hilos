@@ -12,7 +12,7 @@ package modelo;
 public class Numero {
     
     private Numero() {
-        instancia = new Numero();
+        
     }
     public static Numero getInstancia() {
         if(instancia == null)
