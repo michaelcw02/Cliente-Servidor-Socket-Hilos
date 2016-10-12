@@ -9,15 +9,30 @@ package modelo;
  *
  * @author Michael Chen W.
  */
-public class Numero {
+public class Numero extends Thread {
     
-    private Numero() {
-        
+    public Numero(String cmd) {
+        comando = cmd;
     }
-    public static Numero getInstancia() {
-        if(instancia == null)
-            instancia = new Numero();
-        return instancia;
+    
+    @Override 
+    public void run() {
+        
+        String[] separado = comando.split(" ");
+        int numero = Integer.parseInt(separado[1]);
+
+        if (separado[0].equals("CALCULAR_PRIMO")) {
+            boolean primo = calcularPrimo(numero);
+            if (primo)
+                respuesta = ("EL NUMERO: " + numero + " ES PRIMO\n");
+            else
+                respuesta = ("EL NUMERO: " + numero + " NO ES PRIMO\n");
+            
+        } else if (separado[0].equals("CALCULAR_INVERSO")) {
+            int num_inv = calcularInverso(numero);
+            respuesta = ("El numero " + numero + " invertido es " + num_inv + "\n");
+        }
+
     }
     
     public int calcularInverso(int numero) {
@@ -43,6 +58,11 @@ public class Numero {
         }
         return primo;
     }
+
+    public String getRespuesta() {
+        return respuesta;
+    }
     
-    private static Numero instancia = null;
+    String comando;
+    String respuesta;
 }
