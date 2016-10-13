@@ -32,7 +32,7 @@ public class Cliente extends Thread {
     public void run() {
 
         try {
-            servidor = new ServerSocket(PORT);
+            servidor = new ServerSocket(PUERTO_ENTRADA);
         } catch (Exception e) {
             setMsg("Couldn't connect..\n");
             activo = false;
@@ -69,7 +69,7 @@ public class Cliente extends Thread {
     private void startSending() {
         try {
             
-            socket = new Socket(ip, PORT+1);
+            socket = new Socket(ip, PUERTO_SALIDA);
             outputData = new DataOutputStream(socket.getOutputStream());
             
             iniciarTodos();
@@ -139,7 +139,8 @@ public class Cliente extends Thread {
     private Socket socket;
     private boolean activo;
     private InetAddress ip;
-    private final int PORT = 8585;
+    private final int PUERTO_ENTRADA = 8500;
+    private final int PUERTO_SALIDA = 8585;
     private AdaptadorSubject subject;
     LinkedList<Numero> numeros = null;
 }
