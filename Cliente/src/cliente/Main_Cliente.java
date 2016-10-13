@@ -20,6 +20,8 @@ public class Main_Cliente {
         
     }
     
+    //andy guapo... jaja
+    
     /*public static InetAddress getdir(String ar[]) {
     InetAddress tem = null;
     try {
