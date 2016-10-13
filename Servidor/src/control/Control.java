@@ -5,7 +5,6 @@
  */
 package control;
 
-import interfaz.TablaIPs;
 import interfaz.VentanaPrincipal;
 import java.io.PrintStream;
 import modelo.Servidor;
@@ -18,19 +17,17 @@ public class Control {
     
     public Control() {
         ventana = new VentanaPrincipal(this);
-        ventanaSecundaria = new TablaIPs();
         servidor = new Servidor();
         
     }
     
     public void muestraVentana() {
-        ventanaSecundaria.show();
         ventana.show();        
     }
     
     public void agregarIp(String ip) {
         servidor.agregarClientes(ip);
-        ventanaSecundaria.addIP(ip);
+        ventana.addIP(ip);
     }
     public void agregarCantidad(int cant) {
         cantidad = cant;
@@ -41,7 +38,6 @@ public class Control {
     }   
     
     VentanaPrincipal ventana;
-    TablaIPs ventanaSecundaria;
     Servidor servidor;
     int cantidad = 0;
     PrintStream ps;
