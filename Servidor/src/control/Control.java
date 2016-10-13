@@ -38,11 +38,7 @@ public class Control {
     public void calcular(String cmd) {
         //ps = new PrintStream(/*servidor.getOutputStream()*/);
         servidor.ejecutar(cmd, cantidad);
-    }
-    public void respuesta() {
-        servidor.respuestas();
-    }
-    
+    }   
     
     VentanaPrincipal ventana;
     TablaIPs ventanaSecundaria;
