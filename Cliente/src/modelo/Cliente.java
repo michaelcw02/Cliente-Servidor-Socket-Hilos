@@ -7,15 +7,13 @@ package modelo;
 
 import adaptadores.AdaptadorSubject;
 import interfaces.Observer;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -46,10 +44,11 @@ public class Cliente extends Thread {
 
                 socket = servidor.accept();
                 ip = socket.getInetAddress();
-                inputData = new DataInputStream(socket.getInputStream());
+                dataInput = new InputStreamReader(socket.getInputStream());
+                input = new BufferedReader(dataInput);
 
                 String mensajeOriginal;
-                while ((mensajeOriginal = inputData.readLine()) != null) {
+                while ((mensajeOriginal = input.readLine()) != null) {
 
                     setMsg("> " + mensajeOriginal + "\n");
                     numeros.add(new Numero(mensajeOriginal));
@@ -71,13 +70,13 @@ public class Cliente extends Thread {
         try {
             
             socket = new Socket(ip, PORT+1);
-            outputData = new PrintStream(socket.getOutputStream());
+            outputData = new DataOutputStream(socket.getOutputStream());
             
             iniciarTodos();
             while(algunoVivo());
             
             for(Numero numero : numeros) {
-                outputData.println(numero.getRespuesta());
+                outputData.writeBytes(numero.getRespuesta());
                 setMsg(numero.getRespuesta());
             }
         } catch(Exception e) {            
@@ -131,8 +130,9 @@ public class Cliente extends Thread {
     
     
     private ServerSocket servidor;
-    private PrintStream outputData;
-    private DataInputStream inputData;
+    private DataOutputStream outputData;
+    InputStreamReader dataInput;
+    BufferedReader input;
     
     
     private String msg;
