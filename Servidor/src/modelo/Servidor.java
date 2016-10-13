@@ -19,7 +19,7 @@ public class Servidor {
 
     public Servidor() {
         listaClientes = new LinkedList<>();
-        clienteEscuchando = new EscuchaCliente(PUERTO_SALIDA);
+        clienteEscuchando = new EscuchaCliente();
     }
     public void agregarClientes(String ip) {
         listaClientes.add(new InetSocketAddress(ip, PUERTO_SALIDA));
@@ -30,11 +30,11 @@ public class Servidor {
         cmd = CMD_INICIAL + cmd + " ";
         
         int counter = 1;
+        readMessages(); //initializes a thread to start reading any message
         for (InetSocketAddress cliente : listaClientes) {
             try {
                 socket = new Socket(cliente.getAddress(), cliente.getPort());
                 sendMessage(cmd, cantPerClient, counter++);
-                readMessages();
             } catch (Exception ex) {
             }            
         }
@@ -71,7 +71,7 @@ public class Servidor {
     
     private void readMessages() {
         
-        EscuchaCliente clienteEscuchando = new EscuchaCliente(PUERTO_SALIDA);
+        clienteEscuchando = new EscuchaCliente();
         clienteEscuchando.start();
          
     }
@@ -80,7 +80,7 @@ public class Servidor {
     private Socket socket = null;
     private List<InetSocketAddress> listaClientes = null;
     private EscuchaCliente clienteEscuchando = null;
-    private final int PUERTO_SALIDA = 8585;
+    private final int PUERTO_SALIDA = 8500;
     private final String CMD_INICIAL = "CALCULAR_";
                                       //CALCULAR_PRIMO
                                       //CALCULAR_INVERSO
