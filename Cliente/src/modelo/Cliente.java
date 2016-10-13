@@ -140,6 +140,6 @@ public class Cliente extends Thread {
     private boolean activo;
     private InetAddress ip;
     private final int PORT = 8585;
-    AdaptadorSubject subject;
+    private AdaptadorSubject subject;
     LinkedList<Numero> numeros = null;
 }
