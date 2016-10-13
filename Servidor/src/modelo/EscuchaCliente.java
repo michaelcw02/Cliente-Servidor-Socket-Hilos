@@ -19,9 +19,8 @@ import javax.swing.JTextArea;
  */
 public class EscuchaCliente extends Thread {
     
-    public EscuchaCliente(int port) {
+    public EscuchaCliente() {
         activo = true;
-        PUERTO = port;
         respuesta = new Respuestas();
         txtArea = respuesta.getTxtArea();
     }
@@ -30,7 +29,7 @@ public class EscuchaCliente extends Thread {
     public void run() {
         respuesta.show();
         try {
-            servidor = new ServerSocket(PUERTO+1);
+            servidor = new ServerSocket(PUERTO_ENTRADA);
         } catch (Exception e) {
             txtArea.append("NO SE PUDO CONECTAR AL SERVIDOR..\n");
             System.out.println("NO SE PUDO CONECTAR AL SERVIDOR..");
@@ -78,7 +77,7 @@ public class EscuchaCliente extends Thread {
     private ServerSocket servidor;
     InputStreamReader dataInput;
     BufferedReader input;
-    private int PUERTO;
+    private final int PUERTO_ENTRADA = 8585;
     Respuestas respuesta;
     JTextArea txtArea;
 }
