@@ -5,14 +5,11 @@
  */
 package modelo;
 
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.DataOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -52,11 +49,11 @@ public class Servidor {
         int end = cant * number;
         
         try {
-            outputData = new PrintStream(socket.getOutputStream());
+            outputData = new DataOutputStream(socket.getOutputStream());
             String cmdToSend;
             for(int i = start; i <= end; i++) {
-                cmdToSend = cmd + String.valueOf(i);
-                outputData.println(cmdToSend);
+                cmdToSend = cmd + String.valueOf(i) + "\n";
+                outputData.writeBytes(cmdToSend);
             }
             ok = true;
         } catch (Exception e) {
@@ -80,12 +77,11 @@ public class Servidor {
     }
        
     public void respuestas() {
-        
         clienteEscuchando.stop();
         System.out.println(clienteEscuchando.getResultados());
     }
     
-    PrintStream outputData;
+    private DataOutputStream outputData;
     private Socket socket = null;
     private List<InetSocketAddress> listaClientes = null;
     private EscuchaCliente clienteEscuchando = null;
