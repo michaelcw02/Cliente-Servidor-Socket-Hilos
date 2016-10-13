@@ -75,12 +75,7 @@ public class Servidor {
         clienteEscuchando.start();
          
     }
-       
-    public void respuestas() {
-        clienteEscuchando.stop();
-        System.out.println(clienteEscuchando.getResultados());
-    }
-    
+           
     private DataOutputStream outputData;
     private Socket socket = null;
     private List<InetSocketAddress> listaClientes = null;
