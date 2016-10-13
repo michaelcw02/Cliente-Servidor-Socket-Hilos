@@ -9,9 +9,6 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -20,7 +17,6 @@ import java.util.logging.Logger;
 public class EscuchaCliente extends Thread {
     
     public EscuchaCliente(int port) {
-        resultados = new LinkedList<>();
         activo = true;
         PUERTO = port;
     }
@@ -44,12 +40,14 @@ public class EscuchaCliente extends Thread {
                 dataInput = new DataInputStream(socket.getInputStream());
                 String mensaje;
                 while ((mensaje = dataInput.readLine()) != null) {
-                    System.out.println(">" + mensaje);
-                    resultados.add(mensaje);
+                    if (mensaje != " ") {
+                        System.out.println(">" + mensaje);
+                        resultados = resultados + (mensaje + "\n");
+                    }
                 }
 
             } catch (Exception ex) {
-                resultados.add("ERROR ON CLIENT");
+                resultados = resultados + ("ERROR ON CLIENT\n");
             }
             try {
                 socket.close();
@@ -58,7 +56,7 @@ public class EscuchaCliente extends Thread {
         }
     }
     
-    public LinkedList<String> getResultados() {
+    public String getResultados() {
         return resultados;
     }
 
@@ -74,6 +72,6 @@ public class EscuchaCliente extends Thread {
     private Socket socket;
     private ServerSocket servidor;
     DataInputStream dataInput;
-    LinkedList<String> resultados;
+    String resultados = "\n";
     private int PUERTO;
 }
