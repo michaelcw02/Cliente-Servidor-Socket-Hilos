@@ -5,12 +5,13 @@
  */
 package modelo;
 
+import interfaz.Respuestas;
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -21,23 +22,28 @@ public class EscuchaCliente extends Thread {
     public EscuchaCliente(int port) {
         activo = true;
         PUERTO = port;
+        respuesta = new Respuestas();
+        txtArea = respuesta.getTxtArea();
     }
     
     @Override
     public void run() {
-        
+        respuesta.show();
         try {
             servidor = new ServerSocket(PUERTO+1);
         } catch (Exception e) {
+            txtArea.append("NO SE PUDO CONECTAR AL SERVIDOR..\n");
             System.out.println("NO SE PUDO CONECTAR AL SERVIDOR..");
             activo = false;
         }
-        
+
+        txtArea.append("SERVIDOR ESCUCHANDO..\n");        
         System.out.println("SERVIDOR ESCUCHANDO..");
         while (activo) {
             try {
 
                 socket = servidor.accept();
+                txtArea.append("SERVIDOR CONECTADO..\n");
                 System.out.println("SERVIDOR CONECTADO..");
                 dataInput = new InputStreamReader(socket.getInputStream());
                 input = new BufferedReader(dataInput);
@@ -45,12 +51,12 @@ public class EscuchaCliente extends Thread {
                 while ((mensaje = input.readLine()) != null) {
                     if (mensaje != " ") {
                         System.out.println(">" + mensaje);
-                        resultados = resultados + (mensaje + "\n");
+                        txtArea.append(mensaje + "\n");
                     }
                 }
 
             } catch (Exception ex) {
-                resultados = resultados + ("ERROR ON CLIENT\n");
+                txtArea.append("ERROR ON CLIENT\n");
             }
             try {
                 socket.close();
@@ -59,10 +65,6 @@ public class EscuchaCliente extends Thread {
         }
     }
     
-    public String getResultados() {
-        return resultados;
-    }
-
     public void setActivo(boolean activo) {
             this.activo = activo;
         try {
@@ -76,6 +78,7 @@ public class EscuchaCliente extends Thread {
     private ServerSocket servidor;
     InputStreamReader dataInput;
     BufferedReader input;
-    String resultados = "\n";
     private int PUERTO;
+    Respuestas respuesta;
+    JTextArea txtArea;
 }
