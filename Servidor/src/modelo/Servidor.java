@@ -82,11 +82,7 @@ public class Servidor {
     public void respuestas() {
         
         clienteEscuchando.stop();
-        for(String respuesta: clienteEscuchando.getResultados()) {
-                System.out.println(respuesta);
-        }
-        
-        
+        System.out.println(clienteEscuchando.getResultados());
     }
     
     PrintStream outputData;
