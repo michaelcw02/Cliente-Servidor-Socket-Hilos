@@ -48,15 +48,10 @@ public class Numero extends Thread {
     }
     
     public boolean calcularPrimo(int numero) {
-        int contador = 2;
-        boolean primo = true;
-        while ((primo) && (contador != numero)) {
-            if (numero % contador == 0) {
-                primo = false;
-            }
-            contador++;
-        }
-        return primo;
+        for(int i = 2; i < numero/2; i++)
+            if( (numero%i) == 0)
+                return true;
+        return false;
     }
 
     public String getRespuesta() {
