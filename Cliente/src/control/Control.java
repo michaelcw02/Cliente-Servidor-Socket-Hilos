@@ -25,8 +25,11 @@ public class Control {
     }
     
     public void conectarse() {
+        try {
         cliente.setActivo(true);
         cliente.start();
+        } catch(Exception e) {
+        }
     }
     public void desconectarse() {
         cliente.setActivo(false);
