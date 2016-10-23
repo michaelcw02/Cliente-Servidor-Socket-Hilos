@@ -26,8 +26,8 @@ public class Control {
     
     public void conectarse() {
         try {
-        cliente.setActivo(true);
-        cliente.start();
+            cliente.setActivo(true);
+            cliente.start();
         } catch(Exception e) {
         }
     }
