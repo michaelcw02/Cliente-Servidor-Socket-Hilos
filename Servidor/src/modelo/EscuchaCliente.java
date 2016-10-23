@@ -25,9 +25,12 @@ public class EscuchaCliente extends Thread {
         txtArea = respuesta.getTxtArea();
     }
     
+    public void showTxtArea() {
+        respuesta.show();
+    }
+    
     @Override
     public void run() {
-        respuesta.show();
         try {
             servidor = new ServerSocket(PUERTO_ENTRADA);
         } catch (Exception e) {
