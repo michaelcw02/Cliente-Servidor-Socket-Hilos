@@ -72,6 +72,7 @@ public class Servidor {
     private void readMessages() {
         
         clienteEscuchando = new EscuchaCliente();
+        clienteEscuchando.showTxtArea();
         clienteEscuchando.start();
          
     }
