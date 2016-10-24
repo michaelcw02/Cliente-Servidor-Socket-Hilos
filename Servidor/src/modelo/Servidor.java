@@ -36,7 +36,7 @@ public class Servidor {
                 socket = new Socket(cliente.getAddress(), cliente.getPort());
                 sendMessage(cmd, cantPerClient, counter++);
             } catch (Exception ex) {
-            }            
+            }
         }
         try {
         } catch (Exception ex) {
