@@ -3,8 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Michael%20Chen%20W/2016/UNA/II%20SEMESTRE/PROGRAMACION%20III/II/SOCKET%20-%20HILOS%20TAREA%20PROGRAMADA/Servidor/src/modelo/Servidor.java</file>
-            <file>file:/D:/Michael%20Chen%20W/2016/UNA/II%20SEMESTRE/PROGRAMACION%20III/II/SOCKET%20-%20HILOS%20TAREA%20PROGRAMADA/Servidor/src/servidor/Main_Servidor.java</file>
+            <file>file:/D:/Michael%20Chen%20W/2016/UNA/II%20SEMESTRE/PROGRAMACION%20III/II/SOCKET%20-%20HILOS%20TAREA%20PROGRAMADA/Cliente-Servidor-Socket-Hilos/Cliente-Servidor-Socket-Hilos/Servidor/src/interfaz/VentanaPrincipal.java</file>
+            <file>file:/D:/Michael%20Chen%20W/2016/UNA/II%20SEMESTRE/PROGRAMACION%20III/II/SOCKET%20-%20HILOS%20TAREA%20PROGRAMADA/Cliente-Servidor-Socket-Hilos/Cliente-Servidor-Socket-Hilos/Servidor/src/interfaz/Respuestas.java</file>
+            <file>file:/D:/Michael%20Chen%20W/2016/UNA/II%20SEMESTRE/PROGRAMACION%20III/II/SOCKET%20-%20HILOS%20TAREA%20PROGRAMADA/Cliente-Servidor-Socket-Hilos/Cliente-Servidor-Socket-Hilos/Servidor/src/modelo/EscuchaCliente.java</file>
+            <file>file:/D:/Michael%20Chen%20W/2016/UNA/II%20SEMESTRE/PROGRAMACION%20III/II/SOCKET%20-%20HILOS%20TAREA%20PROGRAMADA/Cliente-Servidor-Socket-Hilos/Cliente-Servidor-Socket-Hilos/Servidor/src/modelo/Servidor.java</file>
+            <file>file:/D:/Michael%20Chen%20W/2016/UNA/II%20SEMESTRE/PROGRAMACION%20III/II/SOCKET%20-%20HILOS%20TAREA%20PROGRAMADA/Cliente-Servidor-Socket-Hilos/Cliente-Servidor-Socket-Hilos/Servidor/src/control/Control.java</file>
         </group>
     </open-files>
 </project-private>
