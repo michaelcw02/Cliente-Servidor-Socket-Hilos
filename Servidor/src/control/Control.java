@@ -17,8 +17,7 @@ public class Control {
     
     public Control() {
         ventana = new VentanaPrincipal(this);
-        servidor = new Servidor();
-        
+        servidor = new Servidor();        
     }
     
     public void muestraVentana() {
